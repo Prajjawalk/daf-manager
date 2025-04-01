@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { DafActivityTable } from "../..//components/daf-activity-table";
+import { DafActivityTable } from "../../components/daf-activity-table";
 import { useQuery } from "@tanstack/react-query";
 import { formatUsdc } from "../utils/formatUsdc";
 import { Daf } from "../utils/endaoment-types";

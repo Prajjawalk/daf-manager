@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const checkSignedInQueryOptions = queryOptions({
   queryKey: ["Check Signed In"],
   queryFn: async (): Promise<boolean> => {
-    const response = await fetch(`http://localhost:5454/check-login`, {
+    const response = await fetch(`/api/check-login`, {
       credentials: "include",
     });
     const data = await response.json();

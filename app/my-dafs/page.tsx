@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { CreditCard, Plus, Search } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import { DonationModal } from "../components/DonationModal";
+import { DonationModal } from "../../components/DonationModal";
+import { GrantBox } from "../../components/GrantBox";
 
 import { Button } from "../../components/ui/button";
 import {
@@ -35,6 +36,8 @@ export default function MyDafsPage() {
   const allDafsResponse = useQuery(allDafsQueryOptions);
   const [showDonationModal, setShowDonationModal] = useState(false);
   const [seectedDaf, setSelectedDaf] = useState("");
+  const [showGrantModal, setShowGrantModal] = useState(false);
+  const [dafName, setDafname] = useState("");
 
   return (
     <div className="container py-8">
@@ -77,6 +80,8 @@ export default function MyDafsPage() {
                 description={daf.description}
                 setShowDonationModal={setShowDonationModal}
                 setSelectedDaf={setSelectedDaf}
+                setShowGrantModal={setShowGrantModal}
+                setDafname={setDafname}
               />
             ))}
           </div>
@@ -87,6 +92,13 @@ export default function MyDafsPage() {
           isOpen={showDonationModal}
           onClose={() => setShowDonationModal(false)}
           fundId={seectedDaf}
+        />
+      )}
+      {showGrantModal && (
+        <GrantBox
+          daf={seectedDaf}
+          dafName={dafName}
+          onClose={() => setShowGrantModal(false)}
         />
       )}
     </div>
@@ -100,6 +112,8 @@ function DafDetailCard({
   description,
   setShowDonationModal,
   setSelectedDaf,
+  setShowGrantModal,
+  setDafname,
 }: {
   id: string;
   name: string;
@@ -107,6 +121,8 @@ function DafDetailCard({
   description: string;
   setShowDonationModal: Dispatch<SetStateAction<boolean>>;
   setSelectedDaf: Dispatch<SetStateAction<string>>;
+  setShowGrantModal: Dispatch<SetStateAction<boolean>>;
+  setDafname: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <Card>
@@ -126,7 +142,15 @@ function DafDetailCard({
             <span className="font-medium">{balance}</span>
           </div>
           <div className="flex flex-col gap-2 mt-2">
-            <Button variant="outline" size="sm" className="w-full" asChild>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="w-full"
+              onClick={() => {
+                setShowGrantModal(true);
+                setDafname(name);
+              }}
+            >
               Grant
             </Button>
             <Button
