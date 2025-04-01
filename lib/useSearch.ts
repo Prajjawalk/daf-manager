@@ -18,9 +18,8 @@ interface SearchResponse {
 export function useSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery({
+    useInfiniteQuery<SearchResponse, Error, SearchResponse, string[], string>({
       queryKey: ["organizations", debouncedTerm],
       queryFn: async ({ pageParam = "" }) => {
         const response = await fetch(
@@ -39,6 +38,7 @@ export function useSearch() {
       },
       getNextPageParam: (lastPage: SearchResponse) => lastPage.nextCursor,
       enabled: Boolean(debouncedTerm),
+      initialPageParam: "",
     });
 
   const submitSearch = () => {
