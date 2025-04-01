@@ -6,9 +6,11 @@ if (!process.env.MONGODB_URI) {
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+// @ts-expect-error typeError
 let cached = global.mongoose;
 
 if (!cached) {
+  // @ts-expect-error typeError
   cached = global.mongoose = { conn: null, promise: null };
 }
 
